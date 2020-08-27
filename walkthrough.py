@@ -10,11 +10,10 @@ class Blockchain(object):
         self.new_block(previous_hash="The Times 03/Jan/2009 Chancellor on brink of second bailout for banks.", proof=100) #call to self.new_block; represents original Genesis block; proof=100 complex proof of work
 
     def new_block(self, proof, previous_hash=None):
-         """
+        """
         Create a new block listing key/value pairs of block information in a JSON object.
         Reset the list of pending transactions & append the newest block to the chain.
         """
-
         #new block definition; comprised of key-value pairs (dictionary)
         block = {
             #take the length of our blockchain and add 1 to it; indexes start at 1 index
