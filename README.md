@@ -1,4 +1,4 @@
-# Blockchain Walkthrough
+# Blockchain Tutorial
 
 
 ### This code was covered in "Python Tutorial: Build A Blockchain In < 60 Lines of Code" & "How To Build A Blockchain In Python"
