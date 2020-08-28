@@ -7,13 +7,15 @@ import uuid
 
 class Blockchain(object):
     def __init__(self):
-        self.chain = [] #empty list that we'll add blocks too; our blockchain
-        self.pending_transactions = [] #used for when users send our "coins" to each other until they're approved and we add them to a new block
+        #empty list that we'll add blocks too; our blockchain
+        self.chain = []
+        #used for when users send our "coins" to each other until they're approved and we add them to a new block
+        self.pending_transactions = []
 
-        self.new_block(previous_hash="The Times 03/Jan/2009 Chancellor on brink of second bailout for banks.", proof=100) 
-        # call to add each block to the chain; represents original Genesis block; proof=100
-        # complex proof of work
-        # self.new_block(previous_hash=1, proof=100)
+        # call to add each block to the chain; represents original Genesis
+        # block; proof=100 is arbitrary
+        self.new_block(previous_hash="The Times 03/Jan/2009 Chancellor on brink of second bailout for banks.", proof=100)
+
 
     def proof_of_work(self, last_proof):
         """
@@ -49,16 +51,15 @@ class Blockchain(object):
             'index': len(self.chain) + 1,
             # Stamp the block when it's created
             'timestamp': time(),
-            # sitting in pending list at initialization of chain;Transactions that are sitting in the ‘pending’ list will be included in our new block
+            # sitting in pending list at initialization of chain; Transactions that are sitting in the ‘pending’ list will be included in our new block
             'transactions': self.pending_transactions,
             # A proof is a random number which is very difficult to find unless you have dedicated high-performance machines running around-the-clock.
             'proof': proof,
             # hashed version of most recent approved block
-            # 'previous_hash': previous_hash or self.hash(self.chain[-1]),
-            'previous_hash': previous_hash,
+            'previous_hash': previous_hash or self.hash(self.chain[-1]),
+            # 'previous_hash': previous_hash,
 
         }
-        # print(f'LAST BLOCK: {self.chain[-1]}')
 
         # empty the pending list of transactions
         self.pending_transactions = []
@@ -112,20 +113,6 @@ class Blockchain(object):
         hex_hash = raw_hash.hexdigest()
 
         return hex_hash
-
-
-# blockchain = Blockchain()
-# t1 = blockchain.new_transaction("Satoshi", "Mike", '5 BTC')
-# t2 = blockchain.new_transaction("Mike", "Satoshi", '1 BTC')
-# t3 = blockchain.new_transaction("Satoshi", "Hal Finney", '5 BTC')
-# blockchain.new_block(12345)
-
-# t4 = blockchain.new_transaction("Mike", "Alice", '1 BTC')
-# t5 = blockchain.new_transaction("Alice", "Bob", '0.5 BTC')
-# t6 = blockchain.new_transaction("Bob", "Mike", '0.5 BTC')
-# blockchain.new_block(6789)
-
-# print("Genesis block: ", blockchain.chain)
 
 # Creating the app node
 
