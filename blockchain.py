@@ -1,4 +1,3 @@
-
 from flask import Flask, jsonify, request
 import hashlib # for encryption
 import json # for block formatting
@@ -7,6 +6,7 @@ import uuid
 
 class Blockchain(object):
     def __init__(self):
+
         #empty list that we'll add blocks too; our blockchain
         self.chain = []
         #used for when users send our "coins" to each other until they're approved and we add them to a new block
@@ -57,8 +57,6 @@ class Blockchain(object):
             'proof': proof,
             # hashed version of most recent approved block
             'previous_hash': previous_hash or self.hash(self.chain[-1]),
-            # 'previous_hash': previous_hash,
-
         }
 
         # empty the pending list of transactions
@@ -87,8 +85,8 @@ class Blockchain(object):
         }
         self.pending_transactions.append(transaction)
         # Return the index of the block to which our new transaction will be added.
-        #hasn't been added yet, will be added to the next block; we want to know
-        #where the transaction was created; in which block it was created/inserted
+        # hasn't been added yet, will be added to the next block; we want to know
+        # where the transaction was created; in which block it was created/inserted
         return self.last_block['index'] + 1
 
     @staticmethod
@@ -101,15 +99,15 @@ class Blockchain(object):
         """
         #cryptography part of blockchain; every block has record of previous block's hash; hash code facilitates enforcing tamper proof aspect of the blockchain
 
-        #take block(dict) and turn into str
+        # take block(dict) and turn into str
         string_object = json.dumps(block, sort_keys=True)
 
-        #convert string into bytes for the hash function
+        # convert string into bytes for the hash function
         block_string = string_object.encode()
-        #secure hash algorithm (sha)
+        # secure hash algorithm (sha)
         raw_hash = hashlib.sha256(block_string)
 
-        #Return the encoded data in hexadecimal format
+        # Return the encoded data in hexadecimal format
         hex_hash = raw_hash.hexdigest()
 
         return hex_hash
@@ -159,10 +157,12 @@ def mine():
 @app.route('/transactions/new', methods=['GET','POST'])
 def new_transaction():
     values = request.get_json(force=True)
+
     # Checking if the required data is there or not
     required = ['sender', 'recipient', 'amount']
     if not all(k in values for k in required):
         return 'Missing values', 400
+
     # creating a new transaction
     index = blockchain.new_transaction(values['sender'], values['recipient'], values['amount'])
     response = {'message': f'Transaction is scheduled to be added to Block No. {index}'}
